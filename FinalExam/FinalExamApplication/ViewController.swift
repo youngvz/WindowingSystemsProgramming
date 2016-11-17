@@ -135,12 +135,10 @@ class ViewController: UIViewController {
     func handleButton(){
         
         guard let xLabel = xTextField.text else{
-            
             return
         }
         
         guard let yLabel = yTextField.text else{
-            
             return
         }
         
@@ -151,17 +149,13 @@ class ViewController: UIViewController {
             
             return
             
-        }
-        
-        if xLabel.isEmpty{
+        }else if xLabel.isEmpty{
             let alert = UIAlertController(title: "Alert", message: "Please enter an X value", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
 
             return
-        }
-
-        if yLabel.isEmpty{
+        }else if yLabel.isEmpty{
             let alert = UIAlertController(title: "Alert", message: "Please enter an Y value", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
@@ -175,7 +169,6 @@ class ViewController: UIViewController {
         let yNum = Double(yLabel)
         let xNum = Double(xLabel)
         
-        
         if (xNum == nil) && (yNum == nil) {
             
             let alert = UIAlertController(title: "Alert", message: "Please, correct errors in X and Y", preferredStyle: UIAlertControllerStyle.alert)
@@ -185,25 +178,14 @@ class ViewController: UIViewController {
             return
 
             
-        }
-        
-        
-        if yNum != nil {
-            print("Valid Integer")
-        }
-        else {
+        }else if (yNum == nil){
             
             let alert = UIAlertController(title: "Alert", message: "Please, correct errors in Y", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
             
             return
-        }
-        
-        if xNum != nil {
-            print("Valid Integer")
-        }
-        else {
+        }else if (xNum == nil){
             
             let alert = UIAlertController(title: "Alert", message: "Please, correct errors in X", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
