@@ -7,7 +7,7 @@ class MenuLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDelega
     
     let blackView = UIView()
     
-    var viewcontroller = ViewController()
+    var viewcontroller = FunctionController()
     
     let cellId = "cellId"
     let cellHeight: CGFloat = 50

@@ -8,11 +8,11 @@
 
 import UIKit
 
-class FillColorLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class FunctionLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     let blackView = UIView()
     
-    var viewcontroller = ViewController()
+    var viewcontroller = FunctionController()
     
     let cellId = "cellId"
     let cellHeight: CGFloat = 50
@@ -26,7 +26,6 @@ class FillColorLauncher: NSObject, UICollectionViewDataSource, UICollectionViewD
     }()
     
     func showSettings() {
-        //show menu
         
         if let window = UIApplication.shared.keyWindow {
             
@@ -38,7 +37,7 @@ class FillColorLauncher: NSObject, UICollectionViewDataSource, UICollectionViewD
             
             window.addSubview(collectionView)
             
-            let height: CGFloat = 150
+            let height: CGFloat = cellHeight * CGFloat(options.count)
             let y = window.frame.height - height
             
             collectionView.frame = CGRect(x: 0, y: window.frame.height, width: window.frame.width, height: height)
@@ -76,16 +75,15 @@ class FillColorLauncher: NSObject, UICollectionViewDataSource, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! FillColorCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! FunctionCell
         
-        cell.shapeLabel.text = options[indexPath.item]
+        cell.functionLabel.text = options[indexPath.item]
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        //viewcontroller..text = options[indexPath.item]
         
         viewcontroller.functionContainerLabel.text = options[indexPath.item]
         
@@ -103,7 +101,7 @@ class FillColorLauncher: NSObject, UICollectionViewDataSource, UICollectionViewD
         collectionView.delegate = self
         collectionView.dataSource = self
         
-        collectionView.register(FillColorCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(FunctionCell.self, forCellWithReuseIdentifier: cellId)
     }
     
 }

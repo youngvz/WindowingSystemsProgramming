@@ -8,7 +8,16 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class FunctionController: UIViewController {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        hideKeyboardWhenTappedAround()
+        setupNavBar()
+        setupViews()
+        
+    }
 
     let inputContainer: UIView = {
         let view = UIView()
@@ -53,7 +62,6 @@ class ViewController: UIViewController {
         
         tf.leftView = paddingForFirst
         tf.leftViewMode = .always
-
         tf.translatesAutoresizingMaskIntoConstraints = false
         tf.layer.borderWidth = 0.5
         tf.layer.borderColor = UIColor.lightGray.cgColor
@@ -68,7 +76,6 @@ class ViewController: UIViewController {
         
         tf.leftView = paddingForFirst
         tf.leftViewMode = .always
-
         tf.translatesAutoresizingMaskIntoConstraints = false
         tf.layer.borderWidth = 0.5
         tf.layer.borderColor = UIColor.lightGray.cgColor
@@ -96,12 +103,6 @@ class ViewController: UIViewController {
         return label
     }()
 
-    
-    func handleFunction(){
-        fillColorLauncher.showSettings()
-    }
-    
-    
     let computeTextField: UITextField = {
         let tf = UITextField()
         tf.text = ""
@@ -109,7 +110,6 @@ class ViewController: UIViewController {
         
         tf.leftView = paddingForFirst
         tf.leftViewMode = .always
-
         tf.textAlignment = .center
         tf.isEnabled = false
         tf.translatesAutoresizingMaskIntoConstraints = false
@@ -131,109 +131,6 @@ class ViewController: UIViewController {
         btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
     }()
-    
-    func handleButton(){
-        
-        guard let xLabel = xTextField.text else{
-            return
-        }
-        
-        guard let yLabel = yTextField.text else{
-            return
-        }
-        
-        if xLabel.isEmpty && yLabel.isEmpty{
-            let alert = UIAlertController(title: "Alert", message: "Please enter a X and Y value", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-            
-            return
-            
-        }else if xLabel.isEmpty{
-            let alert = UIAlertController(title: "Alert", message: "Please enter an X value", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-
-            return
-        }else if yLabel.isEmpty{
-            let alert = UIAlertController(title: "Alert", message: "Please enter an Y value", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-            
-            return
-
-        }
-        
-        // check if x and y label is valid
-        
-        let yNum = Double(yLabel)
-        let xNum = Double(xLabel)
-        
-        if (xNum == nil) && (yNum == nil) {
-            
-            let alert = UIAlertController(title: "Alert", message: "Please, correct errors in X and Y", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-            
-            return
-
-            
-        }else if (yNum == nil){
-            
-            let alert = UIAlertController(title: "Alert", message: "Please, correct errors in Y", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-            
-            return
-        }else if (xNum == nil){
-            
-            let alert = UIAlertController(title: "Alert", message: "Please, correct errors in X", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-            
-            return
-        }
-        
-        guard let functionName = functionContainerLabel.text else{
-            let alert = UIAlertController(title: "Alert", message: "Please select a function to compute!", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-            
-            
-            return
-        }
-        
-        
-        
-        let x = convertString(xLabel)
-        let y = convertString(yLabel)
-
-        
-        if functionName == "3*X+4*Y-8"{
-            
-            let value = ((3*x)+(4*y)-8)
-            computeTextField.text = String(value)
-        }
-        if functionName == "X/(Y*Y+1)"{
-            let value = (x/((y*y)+1))
-            computeTextField.text = String(value)
-
-        }
-        if functionName == "X*X-Y+2" {
-            let value = ((x*x) - y + 2)
-            computeTextField.text = String(value)
-        }
-        
-    }
-    
-    func convertString(_ value: String) -> Double {
-        
-        let converted: Double = Double(value)!
-        
-        return converted
-    }
-
-    
 
     lazy var menuLauncher: MenuLauncher = {
         let launcher = MenuLauncher()
@@ -241,36 +138,12 @@ class ViewController: UIViewController {
         return launcher
     }()
     
-    lazy var fillColorLauncher: FillColorLauncher = {
-        let launcher = FillColorLauncher()
+    lazy var functionLauncher: FunctionLauncher = {
+        let launcher = FunctionLauncher()
         launcher.viewcontroller = self
         return launcher
     }()
 
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-        hideKeyboardWhenTappedAround()
-        setupNavBar()
-        setupViews()
-
-    }
-
-    
-    func setupNavBar(){
-        navigationItem.title = "Exam Programming Assignment"
-        
-        let menuButton = UIBarButtonItem(image: UIImage(named: "Menu")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(logout))
-        
-        navigationItem.rightBarButtonItem =  menuButton
-    }
-    
-    func logout(){
-        menuLauncher.showSettings()
-
-    }
-    
     func setupViews(){
         view.addSubview(inputContainer)
         inputContainer.addSubview(xLabel)
@@ -283,8 +156,6 @@ class ViewController: UIViewController {
         inputContainer.addSubview(computeLabel)
         inputContainer.addSubview(computeTextField)
         inputContainer.addSubview(computeButton)
-        
-        
         
         inputContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         inputContainer.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
@@ -301,8 +172,6 @@ class ViewController: UIViewController {
         xTextField.widthAnchor.constraint(equalToConstant: 200).isActive = true
         xTextField.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
-        
-        
         yLabel.topAnchor.constraint(equalTo: xLabel.bottomAnchor, constant: 2).isActive = true
         yLabel.leftAnchor.constraint(equalTo: inputContainer.leftAnchor, constant: 12).isActive = true
         yLabel.widthAnchor.constraint(equalToConstant: 70).isActive = true
@@ -312,8 +181,6 @@ class ViewController: UIViewController {
         yTextField.leftAnchor.constraint(equalTo: yLabel.rightAnchor, constant: 6).isActive = true
         yTextField.widthAnchor.constraint(equalToConstant: 200).isActive = true
         yTextField.heightAnchor.constraint(equalToConstant: 40).isActive = true
-
-        
 
         functionLabel.topAnchor.constraint(equalTo: yLabel.bottomAnchor, constant: 2).isActive = true
         functionLabel.leftAnchor.constraint(equalTo: inputContainer.leftAnchor, constant: 12).isActive = true
@@ -331,14 +198,11 @@ class ViewController: UIViewController {
         functionContainerLabel.widthAnchor.constraint(equalTo: functionContainer.widthAnchor, constant: -12).isActive = true
         functionContainerLabel.heightAnchor.constraint(equalTo: functionContainer.heightAnchor).isActive = true
         
-        
-        
         computeLabel.topAnchor.constraint(equalTo: functionLabel.bottomAnchor, constant: 2).isActive = true
         computeLabel.leftAnchor.constraint(equalTo: inputContainer.leftAnchor, constant: 12).isActive = true
         computeLabel.widthAnchor.constraint(equalToConstant: 70).isActive = true
         computeLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
 
-        
         computeTextField.centerYAnchor.constraint(equalTo: computeLabel.centerYAnchor).isActive = true
         computeTextField.leftAnchor.constraint(equalTo: computeLabel.rightAnchor, constant: 6).isActive = true
         computeTextField.widthAnchor.constraint(equalToConstant: 200).isActive = true
@@ -348,13 +212,7 @@ class ViewController: UIViewController {
         computeButton.leftAnchor.constraint(equalTo: inputContainer.leftAnchor).isActive = true
         computeButton.widthAnchor.constraint(equalTo: inputContainer.widthAnchor).isActive = true
         computeButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-
-        
-        
-        
         
     }
-
-
 }
 
