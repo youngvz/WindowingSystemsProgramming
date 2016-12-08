@@ -1,14 +1,8 @@
-///
-//  ShapeLauncher.swift
-//  Homework 4
-//
-//  Created by Viraj Shah on 10/11/16.
-//  Copyright © 2016 WSP. All rights reserved.
-//
+
 
 import UIKit
 
-class FillColorLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class MenuLauncher: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     let blackView = UIView()
     
@@ -16,7 +10,8 @@ class FillColorLauncher: NSObject, UICollectionViewDataSource, UICollectionViewD
     
     let cellId = "cellId"
     let cellHeight: CGFloat = 50
-    let options = ["White", "Gray", "Black", "Yellow", "Orange", "Red", "Green", "Blue", "Violet", "Pink"]
+    let iconOptions = ["start" , "restart", "pause", "exit", "cancel"]
+    let options = ["Start", "Reset", "Pause", "Exit", ""]
     
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -38,10 +33,10 @@ class FillColorLauncher: NSObject, UICollectionViewDataSource, UICollectionViewD
             
             window.addSubview(collectionView)
             
-            let height: CGFloat = 500
+            let height = cellHeight * CGFloat(options.count)
             let y = window.frame.height - height
             
-            collectionView.frame = CGRect(x: 0, y: window.frame.height, width: window.frame.width, height: height)
+            collectionView.frame = CGRect(x: 8, y: window.frame.height, width: window.frame.width - 16, height: height)
             
             
             blackView.frame = window.frame
@@ -51,9 +46,9 @@ class FillColorLauncher: NSObject, UICollectionViewDataSource, UICollectionViewD
                 
                 self.blackView.alpha = 1
                 
-                self.collectionView.frame = CGRect(x: 0, y: y, width: self.collectionView.frame.width, height: self.collectionView.frame.height)
-                
-            }, completion: nil)
+                self.collectionView.frame = CGRect(x: 8, y: y - 8, width: self.collectionView.frame.width, height: self.collectionView.frame.height)
+
+                }, completion: nil)
         }
     }
     
@@ -62,13 +57,13 @@ class FillColorLauncher: NSObject, UICollectionViewDataSource, UICollectionViewD
             self.blackView.alpha = 0
             
             if let window = UIApplication.shared.keyWindow {
-                self.collectionView.frame = CGRect(x: 0, y: window.frame.height, width: window.frame.width, height: self.collectionView.frame.height)
+                self.collectionView.frame = CGRect(x: 8, y: window.frame.height + 8, width: window.frame.width - 16, height: self.collectionView.frame.height)
             }
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return options.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -76,18 +71,51 @@ class FillColorLauncher: NSObject, UICollectionViewDataSource, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! FillColorCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! MenuCell
         
-        cell.shapeLabel.text = options[indexPath.item]
+        cell.iconImage.image = UIImage(named: iconOptions[indexPath.item] )
+        
+        
+        if !viewcontroller.isPaused{
+            
+            if options[indexPath.item] == "Pause" {
+            cell.resetLabel.textColor = .gray
+            }
+        }
+        
+        cell.resetLabel.text = options[indexPath.item]
+        
+        if cell.iconImage.image == UIImage(named: "cancel"){
+            cell.backgroundColor = UIColor(red:0.93, green:0.93, blue:0.93, alpha:1.00)
+        }
+
         
         return cell
     }
     
+
+    
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        viewcontroller.fillColorLabelText.text = options[indexPath.item]
+        let option = options[indexPath.row]
         
-        self.handleDismiss()
+        switch (option){
+            case "Start":
+                handleDismiss()
+                viewcontroller.handleStart()
+            case "Reset":
+                handleDismiss()
+                viewcontroller.handleReset()
+            case "Pause":
+            handleDismiss()
+                viewcontroller.handlePause()
+            case "Exit":
+            exit(0_)
+        default:
+            handleDismiss()
+            
+        }
         
     }
     
@@ -101,8 +129,7 @@ class FillColorLauncher: NSObject, UICollectionViewDataSource, UICollectionViewD
         collectionView.delegate = self
         collectionView.dataSource = self
         
-        collectionView.register(FillColorCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(MenuCell.self, forCellWithReuseIdentifier: cellId)
     }
     
 }
-

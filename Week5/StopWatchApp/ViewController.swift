@@ -66,29 +66,64 @@ class ViewController: UIViewController {
     }()
 
     
+    lazy var menuLauncher : MenuLauncher = {
+        let launcher = MenuLauncher()
+        launcher.viewcontroller = self
+        return launcher
+    }()
+    
+    
     var timer:Timer? = Timer()
     
     func handleReset(){
         
+        timer?.invalidate()
+        timer = nil
+        
+        timeLabel.text = "00:00:00:00"
+        
+        startTime = Date.timeIntervalSinceReferenceDate
+
     }
 
     func handleStart(){
         
-        if timer == nil {
-        timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
-        startTime = Date.timeIntervalSinceReferenceDate
+        if timer == nil{
+            timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
+            startTime = Date.timeIntervalSinceReferenceDate
+
         }
+        
+        
     }
 
+    
+    var isPaused = false
+    
     func handlePause(){
-        print(123)
-        timer?.invalidate()
-        timer = nil
+        
+        
+        if isPaused{
+            isPaused = false
+
+            timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
+            
+        }else{
+            timer?.invalidate()
+            timer = nil
+
+            isPaused = true
+        }
+        
+        
     }
 
     
     func setupNavBar(){
         navigationItem.title = "Stop Watch"
+        
+        
+        navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.barTintColor = .red
         
         let moreButton = UIBarButtonItem(image: UIImage(named: "menu")?.withRenderingMode(.alwaysTemplate), style: .plain, target: self, action: #selector(menuTap))
@@ -99,7 +134,7 @@ class ViewController: UIViewController {
 
     
     func menuTap(){
-        print(124)
+        menuLauncher.showSettings()
     }
     
     
@@ -114,7 +149,7 @@ class ViewController: UIViewController {
         var elapsedTime: TimeInterval = currentTime - startTime
         
         //calculate the minutes in elapsed time.
-        
+        let hours = UInt8(elapsedTime / 60.0 / 60.0 )
         let minutes = UInt8(elapsedTime / 60.0)
         
         elapsedTime -= (TimeInterval(minutes) * 60)
@@ -130,14 +165,14 @@ class ViewController: UIViewController {
         let fraction = UInt8(elapsedTime * 100)
         
         //add the leading zero for minutes, seconds and millseconds and store them as string constants
-        
+        let strHours = String(format: "%02d", hours)
         let strMinutes = String(format: "%02d", minutes)
         let strSeconds = String(format: "%02d", seconds)
         let strFraction = String(format: "%02d", fraction)
         
         //concatenate minuets, seconds and milliseconds as assign it to the UILabel
         
-        timeLabel.text = "\(strMinutes):\(strSeconds):\(strFraction)"
+        timeLabel.text = "\(strHours):\(strMinutes):\(strSeconds):\(strFraction)"
         
     }
     

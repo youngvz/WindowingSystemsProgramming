@@ -14,6 +14,8 @@
 		031A9F831DC99472000AB6B9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 031A9F811DC99472000AB6B9 /* LaunchScreen.storyboard */; };
 		031A9F8E1DC99472000AB6B9 /* StopWatchAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031A9F8D1DC99472000AB6B9 /* StopWatchAppTests.swift */; };
 		031A9F991DC99472000AB6B9 /* StopWatchAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031A9F981DC99472000AB6B9 /* StopWatchAppUITests.swift */; };
+		03ED876A1DF9049D00ED8B3F /* MenuLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03ED87691DF9049D00ED8B3F /* MenuLauncher.swift */; };
+		03ED876C1DF904AA00ED8B3F /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03ED876B1DF904AA00ED8B3F /* MenuCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +49,8 @@
 		031A9F941DC99472000AB6B9 /* StopWatchAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StopWatchAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		031A9F981DC99472000AB6B9 /* StopWatchAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopWatchAppUITests.swift; sourceTree = "<group>"; };
 		031A9F9A1DC99472000AB6B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		03ED87691DF9049D00ED8B3F /* MenuLauncher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuLauncher.swift; sourceTree = "<group>"; };
+		03ED876B1DF904AA00ED8B3F /* MenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +103,8 @@
 			children = (
 				031A9F781DC99472000AB6B9 /* AppDelegate.swift */,
 				031A9F7A1DC99472000AB6B9 /* ViewController.swift */,
+				03ED876B1DF904AA00ED8B3F /* MenuCell.swift */,
+				03ED87691DF9049D00ED8B3F /* MenuLauncher.swift */,
 				031A9F7C1DC99472000AB6B9 /* Main.storyboard */,
 				031A9F7F1DC99472000AB6B9 /* Assets.xcassets */,
 				031A9F811DC99472000AB6B9 /* LaunchScreen.storyboard */,
@@ -263,6 +269,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				031A9F7B1DC99472000AB6B9 /* ViewController.swift in Sources */,
+				03ED876A1DF9049D00ED8B3F /* MenuLauncher.swift in Sources */,
+				03ED876C1DF904AA00ED8B3F /* MenuCell.swift in Sources */,
 				031A9F791DC99472000AB6B9 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -512,6 +520,7 @@
 				031A9F9F1DC99472000AB6B9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		031A9FA01DC99472000AB6B9 /* Build configuration list for PBXNativeTarget "StopWatchAppTests" */ = {
 			isa = XCConfigurationList;
@@ -520,6 +529,7 @@
 				031A9FA21DC99472000AB6B9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		031A9FA31DC99472000AB6B9 /* Build configuration list for PBXNativeTarget "StopWatchAppUITests" */ = {
 			isa = XCConfigurationList;
@@ -528,6 +538,7 @@
 				031A9FA51DC99472000AB6B9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
